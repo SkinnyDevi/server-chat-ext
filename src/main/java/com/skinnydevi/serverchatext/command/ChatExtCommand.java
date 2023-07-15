@@ -52,9 +52,12 @@ public class ChatExtCommand {
                         String message = "&c[&lBROAD&f&lCAST&r&c]:&r " + StringArgumentType.getString(ctx, "message");
 
                         serverPlayer.server.execute(() -> {
+                            String coloured = ChatMessageEvent.interpretColours(message);
                             for (ServerPlayer player : serverPlayer.server.getPlayerList().getPlayers()) {
-                                player.sendSystemMessage(Component.literal(ChatMessageEvent.interpretColours(message)));
+                                player.sendSystemMessage(Component.literal(coloured));
                             }
+
+                            ChatMessageEvent.logChatToConsole(coloured);
                         });
 
                         return 1;

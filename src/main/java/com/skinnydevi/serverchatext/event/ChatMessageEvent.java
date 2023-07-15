@@ -49,18 +49,24 @@ public class ChatMessageEvent {
         if (serverPlayer.server.isDedicatedServer()) {
             event.setCanceled(true);
             serverPlayer.server.execute(() -> {
+                String coloured = interpretColours(finalMessage.getString());
                 for (ServerPlayer player : serverPlayer.server.getPlayerList().getPlayers()) {
-                    player.sendSystemMessage(Component.literal(interpretColours(finalMessage.getString())));
+                    player.sendSystemMessage(Component.literal(coloured));
                 }
+
+                logChatToConsole(coloured);
             });
         } else {
             boolean isFinalMessage = false;
             if (previousMessage.equals(message) && !previousMessage.equals(Component.empty())) {
                 event.setCanceled(true);
                 serverPlayer.server.execute(() -> {
+                    String coloured = interpretColours(finalMessage.getString());
                     for (ServerPlayer player : serverPlayer.server.getPlayerList().getPlayers()) {
-                        player.sendSystemMessage(Component.literal(interpretColours(finalMessage.getString())));
+                        player.sendSystemMessage(Component.literal(coloured));
                     }
+
+                    logChatToConsole(coloured);
                 });
 
                 isFinalMessage = true;
@@ -86,6 +92,10 @@ public class ChatMessageEvent {
         }
 
         return message;
+    }
+
+    public static void logChatToConsole(String message) {
+        ServerChatExt.LOGGER.info(ChatFormatting.stripFormatting(message));
     }
 
     private static MutableComponent messageTimestamp() {
