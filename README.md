@@ -13,6 +13,7 @@ Packed with many features you'd desire from bukkit/spigot servers!
 - Chat Colours! Use chat colours every where you want
 - Prefixes and Suffixes! Custom names to be added to express roles and many more things!
 - Allow no opped players to change their own prefixes and suffixes!
+- Broadcast command!
 
 ## Commands
 ### Change your custom text
