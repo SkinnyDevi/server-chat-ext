@@ -20,7 +20,7 @@ authors="SkinnyDevi"
 displayTest="IGNORE_SERVER_VERSION" # MATCH_VERSION is the default if nothing is specified (#optional)
 
 description='''
-This mod provides a way to customize you server's chat with prefix, suffix and custom colours!
+This mod provides a way to customize you server's chat to new heights!
 '''
 [[dependencies.serverchatext]]
     modId="forge"
