@@ -67,8 +67,8 @@ public class ChatMessageEvent {
             }
 
             previousMessage = isFinalMessage ? Component.empty() : message;
-            event.setCanceled(true);
         }
+        event.setCanceled(true);
     }
 
     private static String interpretColours(String message) {
