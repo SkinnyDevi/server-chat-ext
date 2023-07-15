@@ -71,7 +71,7 @@ public class ChatMessageEvent {
         event.setCanceled(true);
     }
 
-    private static String interpretColours(String message) {
+    public static String interpretColours(String message) {
         final Pattern STRIP_FORMATTING_PATTERN = Pattern.compile("(?i)&[0-9a-fk-or]");
         Matcher matcher = STRIP_FORMATTING_PATTERN.matcher(message);
 

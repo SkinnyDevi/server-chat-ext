@@ -4,6 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.skinnydevi.serverchatext.config.ChatExtConfig;
+import com.skinnydevi.serverchatext.event.ChatMessageEvent;
 import com.skinnydevi.serverchatext.handler.CustomPlayerExtensionHandler;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
@@ -22,6 +23,7 @@ public class ChatExtCommand {
                 Commands.literal(CMD_PREFIX).requires(src -> src.hasPermission(allowNoOp ? 0 : 4))
                 .then(change())
                 .then(reset())
+                .then(broadcast())
         );
     }
 
@@ -40,6 +42,24 @@ public class ChatExtCommand {
         reset = reset.then(resetAll());
 
         return reset;
+    }
+
+    private static LiteralArgumentBuilder<CommandSourceStack> broadcast() {
+        return Commands.literal("broadcast").requires(src -> src.hasPermission(4))
+                .then(Commands.argument("message", StringArgumentType.string())
+                    .executes(ctx -> {
+                        ServerPlayer serverPlayer = ctx.getSource().getPlayerOrException();
+                        String message = "&c[&lBROAD&f&lCAST&r&c]:&r " + StringArgumentType.getString(ctx, "message");
+
+                        serverPlayer.server.execute(() -> {
+                            for (ServerPlayer player : serverPlayer.server.getPlayerList().getPlayers()) {
+                                player.sendSystemMessage(Component.literal(ChatMessageEvent.interpretColours(message)));
+                            }
+                        });
+
+                        return 1;
+                    })
+                );
     }
 
     private static LiteralArgumentBuilder<CommandSourceStack> resetAll() {
