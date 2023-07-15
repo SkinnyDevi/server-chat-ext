@@ -13,9 +13,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,7 +24,6 @@ public class ChatMessageEvent {
     @SubscribeEvent
     public static void onServerChatMessage(ServerChatEvent event) {
         if (!ChatExtConfig.ENABLE_CHATEXT.get()) return;
-
 
         ServerPlayer serverPlayer = event.getPlayer();
         Component message = event.getMessage();
@@ -49,22 +46,29 @@ public class ChatMessageEvent {
             CustomPlayerExtensionHandler.applySuffix(serverPlayer, finalMessage, event.getMessage());
         }
 
-        ServerChatExt.LOGGER.debug("FIRED" + event.getRawText());
-        boolean isFinalMessage = false;
-        if (previousMessage.equals(message) && !previousMessage.equals(Component.empty())) {
-            ServerChatExt.LOGGER.debug("FIRED 2" + event.getRawText());
+        if (serverPlayer.server.isDedicatedServer()) {
             event.setCanceled(true);
             serverPlayer.server.execute(() -> {
                 for (ServerPlayer player : serverPlayer.server.getPlayerList().getPlayers()) {
                     player.sendSystemMessage(Component.literal(interpretColours(finalMessage.getString())));
                 }
             });
+        } else {
+            boolean isFinalMessage = false;
+            if (previousMessage.equals(message) && !previousMessage.equals(Component.empty())) {
+                event.setCanceled(true);
+                serverPlayer.server.execute(() -> {
+                    for (ServerPlayer player : serverPlayer.server.getPlayerList().getPlayers()) {
+                        player.sendSystemMessage(Component.literal(interpretColours(finalMessage.getString())));
+                    }
+                });
 
-            isFinalMessage = true;
+                isFinalMessage = true;
+            }
+
+            previousMessage = isFinalMessage ? Component.empty() : message;
+            event.setCanceled(true);
         }
-
-        previousMessage = isFinalMessage ? Component.empty() : message;
-        event.setCanceled(true);
     }
 
     private static String interpretColours(String message) {

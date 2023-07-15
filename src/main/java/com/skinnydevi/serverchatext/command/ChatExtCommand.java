@@ -5,9 +5,11 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.skinnydevi.serverchatext.config.ChatExtConfig;
 import com.skinnydevi.serverchatext.handler.CustomPlayerExtensionHandler;
+import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 
 public class ChatExtCommand {
@@ -48,6 +50,12 @@ public class ChatExtCommand {
                     CustomPlayerExtensionHandler.changePlayerPrefix(player, CustomPlayerExtensionHandler.NULL_EXTENSION);
                     CustomPlayerExtensionHandler.changePlayerSuffix(player, CustomPlayerExtensionHandler.NULL_EXTENSION);
 
+                    ctx.getSource().getPlayerOrException().sendSystemMessage(
+                            Component.literal(ChatFormatting.GOLD + "[" + ChatFormatting.DARK_GREEN + "ChatExt" + ChatFormatting.GOLD + "] "
+                                    + ChatFormatting.DARK_GREEN + "Reset all for player " + ChatFormatting.GREEN + player.getName().getString()
+                            )
+                    );
+
                     return 1;
                 }));
     }
@@ -58,6 +66,12 @@ public class ChatExtCommand {
                     ServerPlayer player = EntityArgument.getPlayer(ctx, "targetplayer");
 
                     CustomPlayerExtensionHandler.changePlayerPrefix(player, CustomPlayerExtensionHandler.NULL_EXTENSION);
+
+                    ctx.getSource().getPlayerOrException().sendSystemMessage(
+                            Component.literal(ChatFormatting.GOLD + "[" + ChatFormatting.DARK_GREEN + "ChatExt" + ChatFormatting.GOLD + "] "
+                                    + ChatFormatting.DARK_GREEN + "Reset prefix for player " + ChatFormatting.GREEN + player.getName().getString()
+                            )
+                    );
 
                     return 1;
                 }));
@@ -70,36 +84,60 @@ public class ChatExtCommand {
 
                     CustomPlayerExtensionHandler.changePlayerSuffix(player, CustomPlayerExtensionHandler.NULL_EXTENSION);
 
+                    ctx.getSource().getPlayerOrException().sendSystemMessage(
+                            Component.literal(ChatFormatting.GOLD + "[" + ChatFormatting.DARK_GREEN + "ChatExt" + ChatFormatting.GOLD + "] "
+                                    + ChatFormatting.DARK_GREEN + "Reset suffix for player " + ChatFormatting.GREEN + player.getName().getString()
+                            )
+                    );
+
                     return 1;
                 }));
     }
 
     private static LiteralArgumentBuilder<CommandSourceStack> resetPersonalAll() {
-        return Commands.literal("all").executes(ctx -> {
+        return Commands.literal("customall").executes(ctx -> {
             ServerPlayer player = ctx.getSource().getPlayerOrException();
 
             CustomPlayerExtensionHandler.changePlayerPrefix(player, CustomPlayerExtensionHandler.NULL_EXTENSION);
             CustomPlayerExtensionHandler.changePlayerSuffix(player, CustomPlayerExtensionHandler.NULL_EXTENSION);
+
+            ctx.getSource().getPlayerOrException().sendSystemMessage(
+                    Component.literal(ChatFormatting.GOLD + "[" + ChatFormatting.DARK_GREEN + "ChatExt" + ChatFormatting.GOLD + "] "
+                            + ChatFormatting.DARK_GREEN + "Reset all successfully"
+                    )
+            );
 
             return 1;
         });
     }
 
     private static LiteralArgumentBuilder<CommandSourceStack> resetPersonalPrefix() {
-        return Commands.literal("prefix").executes(ctx -> {
+        return Commands.literal("customprefix").executes(ctx -> {
             ServerPlayer player = ctx.getSource().getPlayerOrException();
 
             CustomPlayerExtensionHandler.changePlayerPrefix(player, CustomPlayerExtensionHandler.NULL_EXTENSION);
+
+            ctx.getSource().getPlayerOrException().sendSystemMessage(
+                    Component.literal(ChatFormatting.GOLD + "[" + ChatFormatting.DARK_GREEN + "ChatExt" + ChatFormatting.GOLD + "] "
+                            + ChatFormatting.DARK_GREEN + "Reset prefix successfully"
+                    )
+            );
 
             return 1;
         });
     }
 
     private static LiteralArgumentBuilder<CommandSourceStack> resetPersonalSuffix() {
-        return Commands.literal("suffix").executes(ctx -> {
+        return Commands.literal("customsuffix").executes(ctx -> {
             ServerPlayer player = ctx.getSource().getPlayerOrException();
 
             CustomPlayerExtensionHandler.changePlayerSuffix(player, CustomPlayerExtensionHandler.NULL_EXTENSION);
+
+            ctx.getSource().getPlayerOrException().sendSystemMessage(
+                    Component.literal(ChatFormatting.GOLD + "[" + ChatFormatting.DARK_GREEN + "ChatExt" + ChatFormatting.GOLD + "] "
+                            + ChatFormatting.DARK_GREEN + "Reset suffix successfully"
+                    )
+            );
 
             return 1;
         });
@@ -129,6 +167,12 @@ public class ChatExtCommand {
 
                     CustomPlayerExtensionHandler.changePlayerPrefix(player, prefix);
 
+                    ctx.getSource().getPlayerOrException().sendSystemMessage(
+                            Component.literal(ChatFormatting.GOLD + "[" + ChatFormatting.DARK_GREEN + "ChatExt" + ChatFormatting.GOLD + "] "
+                                    + ChatFormatting.DARK_GREEN + "Changed prefix for player " + ChatFormatting.GREEN + player.getName().getString()
+                            )
+                    );
+
                     return 1;
                 }))
         );
@@ -143,18 +187,30 @@ public class ChatExtCommand {
 
                             CustomPlayerExtensionHandler.changePlayerSuffix(player, suffix);
 
+                            ctx.getSource().getPlayerOrException().sendSystemMessage(
+                                    Component.literal(ChatFormatting.GOLD + "[" + ChatFormatting.DARK_GREEN + "ChatExt" + ChatFormatting.GOLD + "] "
+                                            + ChatFormatting.DARK_GREEN + "Changed suffix for player " + ChatFormatting.GREEN + player.getName().getString()
+                                    )
+                            );
+
                             return 1;
                         }))
         );
     }
 
     private static LiteralArgumentBuilder<CommandSourceStack> changePersonalPrefix() {
-        return Commands.literal("prefix").then(
+        return Commands.literal("customprefix").then(
                 Commands.argument("prefix", StringArgumentType.string()).executes(ctx -> {
                     String prefix = StringArgumentType.getString(ctx, "prefix");
                     ServerPlayer player = ctx.getSource().getPlayerOrException();
 
                     CustomPlayerExtensionHandler.changePlayerPrefix(player, prefix);
+
+                    ctx.getSource().getPlayerOrException().sendSystemMessage(
+                            Component.literal(ChatFormatting.GOLD + "[" + ChatFormatting.DARK_GREEN + "ChatExt" + ChatFormatting.GOLD + "] "
+                                    + ChatFormatting.DARK_GREEN + "Changed prefix successfully"
+                            )
+                    );
 
                     return 1;
                 })
@@ -162,12 +218,18 @@ public class ChatExtCommand {
     }
 
     private static LiteralArgumentBuilder<CommandSourceStack> changePersonalSuffix() {
-        return Commands.literal("suffix").then(
+        return Commands.literal("customsuffix").then(
                 Commands.argument("suffix", StringArgumentType.string()).executes(ctx -> {
                     String suffix = StringArgumentType.getString(ctx, "suffix");
                     ServerPlayer player = ctx.getSource().getPlayerOrException();
 
                     CustomPlayerExtensionHandler.changePlayerSuffix(player, suffix);
+
+                    ctx.getSource().getPlayerOrException().sendSystemMessage(
+                            Component.literal(ChatFormatting.GOLD + "[" + ChatFormatting.DARK_GREEN + "ChatExt" + ChatFormatting.GOLD + "] "
+                                    + ChatFormatting.DARK_GREEN + "Reset suffix successfully"
+                            )
+                    );
 
                     return 1;
                 })
