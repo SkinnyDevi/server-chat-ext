@@ -3,9 +3,11 @@ package com.skinnydevi.serverchatext.command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+
 import com.skinnydevi.serverchatext.config.ChatExtConfig;
 import com.skinnydevi.serverchatext.event.ChatMessageEvent;
 import com.skinnydevi.serverchatext.handler.CustomPlayerExtensionHandler;
+
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;

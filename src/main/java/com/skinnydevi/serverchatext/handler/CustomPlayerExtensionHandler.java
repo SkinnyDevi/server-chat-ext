@@ -1,17 +1,9 @@
 package com.skinnydevi.serverchatext.handler;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
-import org.checkerframework.checker.units.qual.A;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class CustomPlayerExtensionHandler {
     public static final String NULL_EXTENSION = "[chatext_null]";

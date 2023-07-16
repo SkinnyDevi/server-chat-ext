@@ -2,19 +2,18 @@ package com.skinnydevi.serverchatext;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.logging.LogUtils;
+
 import com.skinnydevi.serverchatext.command.ChatExtCommand;
 import com.skinnydevi.serverchatext.config.ChatExtConfig;
+
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.event.server.ServerStartingEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+
 import org.slf4j.Logger;
 
 @Mod(ServerChatExt.MODID)

@@ -3,6 +3,7 @@ package com.skinnydevi.serverchatext.event;
 import com.skinnydevi.serverchatext.ServerChatExt;
 import com.skinnydevi.serverchatext.config.ChatExtConfig;
 import com.skinnydevi.serverchatext.handler.CustomPlayerExtensionHandler;
+
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -47,34 +48,29 @@ public class ChatMessageEvent {
         }
 
         if (serverPlayer.server.isDedicatedServer()) {
-            event.setCanceled(true);
-            serverPlayer.server.execute(() -> {
-                String coloured = interpretColours(finalMessage.getString());
-                for (ServerPlayer player : serverPlayer.server.getPlayerList().getPlayers()) {
-                    player.sendSystemMessage(Component.literal(coloured));
-                }
-
-                logChatToConsole(coloured);
-            });
+            sendGlobalChatMessage(event, serverPlayer, finalMessage);
         } else {
             boolean isFinalMessage = false;
             if (previousMessage.equals(message) && !previousMessage.equals(Component.empty())) {
-                event.setCanceled(true);
-                serverPlayer.server.execute(() -> {
-                    String coloured = interpretColours(finalMessage.getString());
-                    for (ServerPlayer player : serverPlayer.server.getPlayerList().getPlayers()) {
-                        player.sendSystemMessage(Component.literal(coloured));
-                    }
-
-                    logChatToConsole(coloured);
-                });
-
+                sendGlobalChatMessage(event, serverPlayer, finalMessage);
                 isFinalMessage = true;
             }
 
             previousMessage = isFinalMessage ? Component.empty() : message;
         }
         event.setCanceled(true);
+    }
+
+    private static void sendGlobalChatMessage(ServerChatEvent event, ServerPlayer serverPlayer, MutableComponent finalMessage) {
+        event.setCanceled(true);
+        serverPlayer.server.execute(() -> {
+            String coloured = interpretColours(finalMessage.getString());
+            for (ServerPlayer player : serverPlayer.server.getPlayerList().getPlayers()) {
+                player.sendSystemMessage(Component.literal(coloured));
+            }
+
+            logChatToConsole(coloured);
+        });
     }
 
     public static String interpretColours(String message) {
