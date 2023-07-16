@@ -4,7 +4,7 @@ Welcome to the best chat mod you will find for Forge!
 
 Packed with many features you'd desire from bukkit/spigot servers!
 
-***Working on SinglePlayer and Multiplayer!***
+***Working on SinglePlayer and Multiplayer!*** ***(This mod is only needed server-side!)***
 
 ![welcome_image](https://raw.githubusercontent.com/SkinnyDevi/server-chat-ext/master/images/intro_image1.png)
 ![prefix_show](https://raw.githubusercontent.com/SkinnyDevi/server-chat-ext/master/images/intro_image2.png)
