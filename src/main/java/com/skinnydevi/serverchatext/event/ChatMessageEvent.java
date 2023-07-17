@@ -2,7 +2,7 @@ package com.skinnydevi.serverchatext.event;
 
 import com.skinnydevi.serverchatext.ServerChatExt;
 import com.skinnydevi.serverchatext.config.ChatExtConfig;
-import com.skinnydevi.serverchatext.handler.CustomPlayerExtensionHandler;
+import com.skinnydevi.serverchatext.handler.PlayerExtensionManager;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -40,11 +40,11 @@ public class ChatMessageEvent {
         }
 
         if (prefixAllowed) {
-            CustomPlayerExtensionHandler.applyPrefix(serverPlayer, finalMessage);
+            PlayerExtensionManager.applyPrefix(serverPlayer, finalMessage);
         }
 
         if (suffixAllowed) {
-            CustomPlayerExtensionHandler.applySuffix(serverPlayer, finalMessage, event.getMessage());
+            PlayerExtensionManager.applySuffix(serverPlayer, finalMessage, event.getMessage());
         }
 
         if (serverPlayer.server.isDedicatedServer()) {
