@@ -49,6 +49,7 @@ public class ChatMessageEvent {
 
         if (serverPlayer.server.isDedicatedServer()) {
             sendGlobalChatMessage(event, serverPlayer, finalMessage);
+            previousMessage = Component.empty();
         } else {
             boolean isFinalMessage = false;
             if (previousMessage.equals(message) && !previousMessage.equals(Component.empty())) {

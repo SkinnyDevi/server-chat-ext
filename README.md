@@ -14,9 +14,10 @@ Packed with many features you'd desire from bukkit/spigot servers!
 - Prefixes and Suffixes! Custom names to be added to express roles and many more things!
 - Allow no opped players to change their own prefixes and suffixes!
 - Broadcast command!
+- Custom nicknames!
 
 ## Commands
-### Change your custom text
+### Change your custom prefix/suffix/nickname
 For Opped players:
 
 ``
@@ -29,38 +30,54 @@ For normal players (config must be correctly adjusted):
 /changeext change (customsuffix/customprefix) "your custom text"
 ``
 
-### Reset your prefix/suffix
+``
+/nickname change (custom nickname)
+``
+
+### Reset your prefix/suffix/nickname
 For Opped players:
 
 ``
-/changeext reset (all/suffix/prefix) (playername)
+/changeext reset (all/suffix/prefix/nickname) (playername)
 ``
 
 For normal players (config must be correctly adjusted):
 
 ``
-/changeext change (customall/customsuffix/customprefix)
+/changeext reset (customall/customsuffix/customprefix)
+``
+
+``
+/nickname reset
+``
+
+### Identify a player's realname using their nickname
+``
+/realname (nickname of player)
 ``
 
 ## Default configuration
 ```toml
 ["Server Chat Extended configuration"]
-#Enable this chat mod. Defaults to true
-enable_chatext = true
-#Enable a timestamp besides the message sent to indicate the time when the message was sent. Defaults to true
-enable_chat_timestamp = true
-#Allow setting a prefix in chat. Defaults to true
-allow_prefix = true
-#Allow setting a suffix in chat. Defaults to true
-allow_suffix = true
-#Allows players which are not OP to change their own prefix and suffix. Defaults to false
-allow_noop_change = false
-#Set the format of the timestmap represented on chat.
-#Examples can be found here: https://www.digitalocean.com/community/tutorials/java-simpledateformat-java-date-format#java-simpledateformat
-#Defaults to "HH:mm".
-timestamp_format = "HH:mm"
-#Colour of the timestamp. Use minecraft colour codes with '&'. Examples: &c, &l, &5.
-#Defaults to gray (&7).
-timestamp_colour = "&7"
-
+    #Enable this chat mod. Defaults to true
+    enable_chatext = true
+    #Enable a timestamp besides the message sent to indicate the time when the message was sent. Defaults to true
+    enable_chat_timestamp = true
+    #Allow setting a prefix in chat. Defaults to true
+    allow_prefix = true
+    #Allow setting a suffix in chat. Defaults to true
+    allow_suffix = true
+    #Set the format of the timestmap represented on chat. 
+    #Examples can be found here: https://www.digitalocean.com/community/tutorials/java-simpledateformat-java-date-format#java-simpledateformat 
+    #Defaults to "HH:mm".
+    timestamp_format = "HH:mm"
+    #Colour of the timestamp. Use minecraft colour codes with '&'. Examples: &c, &l, &5.
+    #Defaults to gray (&7).
+    timestamp_colour = "&7"
+    #Allows players which are not OP to change their own prefix and suffix. Defaults to false
+    allow_noop_prefixes = false
+    #Allow players which are not OP to change their nickname. Default is false.
+    allow_noop_nickname = false
+    #Symbol(s) that indicate that the chatter is using a nickname instead of a realname. Defaults to '*'.
+    nickname_indicator = "*"
 ```

@@ -17,7 +17,16 @@ public class PlayerExtensionManager {
         CompoundTag data = player.getPersistentData();
         String prefix = data.getString("chatext_prefix");
         String suffix = data.getString("chatext_suffix");
-        extensions.put(player, new PlayerExtensions(player, prefix, suffix));
+
+        String nickname;
+        if (data.contains("chatext_nick")) {
+            nickname = data.getString("chatext_nick");
+        } else {
+            data.putString("chatext_nick", NULL_EXTENSION);
+            nickname = NULL_EXTENSION;
+        }
+
+        extensions.put(player, new PlayerExtensions(player, prefix, suffix, nickname));
     }
 
     public static void savePlayerExt(ServerPlayer player) {
@@ -26,6 +35,7 @@ public class PlayerExtensionManager {
 
         data.putString("chatext_prefix", exts.getPrefix());
         data.putString("chatext_suffix", exts.getSuffix());
+        data.putString("chatext_nick", exts.getNickname());
     }
 
     public static void untrackPlayer(ServerPlayer player) {
@@ -47,6 +57,7 @@ public class PlayerExtensionManager {
 
         data.putString("chatext_suffix", NULL_EXTENSION);
         data.putString("chatext_prefix", NULL_EXTENSION);
+        data.putString("chatext_nick", NULL_EXTENSION);
 
     }
 
@@ -66,6 +77,12 @@ public class PlayerExtensionManager {
         extensions.put(player, exts);
     }
 
+    public static void changePlayerNickname(ServerPlayer player, String nickname) {
+        PlayerExtensions exts = extensions.get(player);
+        exts.setNickname(nickname);
+        extensions.put(player, exts);
+    }
+
     public static MutableComponent applyPrefix(ServerPlayer player, MutableComponent component) {
         PlayerExtensions exts = extensions.get(player);
 
@@ -82,5 +99,9 @@ public class PlayerExtensionManager {
         if (!suffix.equals("")) component.append(" ");
 
         return component.append(suffix + ": " + message.getString());
+    }
+
+    public static PlayerExtensions getPlayer(ServerPlayer p) {
+        return extensions.get(p);
     }
 }
