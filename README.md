@@ -10,7 +10,7 @@ Packed with many features you'd desire from bukkit/spigot servers!
 ![prefix_show](https://raw.githubusercontent.com/SkinnyDevi/server-chat-ext/master/images/intro_image2.png)
 
 ## Main features:
-- Chat Colours! Use chat colours every where you want
+- Chat Colours! Use chat colours every where you want: broadcasts, nicknames, prefixes, suffixes and messages!
 - Prefixes and Suffixes! Custom names to be added to express roles and many more things!
 - Allow no opped players to change their own prefixes and suffixes!
 - Broadcast command!
@@ -21,7 +21,7 @@ Packed with many features you'd desire from bukkit/spigot servers!
 For Opped players:
 
 ``
-/chatext change (suffix/prefix) (playername) "your custom text"
+/chatext change (suffix/prefix/nickname) (playername) "your custom text"
 ``
 
 For normal players (config must be correctly adjusted):
@@ -54,6 +54,12 @@ For normal players (config must be correctly adjusted):
 ### Identify a player's realname using their nickname
 ``
 /realname (nickname of player)
+``
+
+### Broadcast to players
+For Opped players:
+``
+/broadcast (message goes here)
 ``
 
 ## Default configuration
