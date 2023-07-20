@@ -21,13 +21,13 @@ Packed with many features you'd desire from bukkit/spigot servers!
 For Opped players:
 
 ``
-/changeext change (suffix/prefix) (playername) "your custom text"
+/chatext change (suffix/prefix) (playername) "your custom text"
 ``
 
 For normal players (config must be correctly adjusted):
 
 ``
-/changeext change (customsuffix/customprefix) "your custom text"
+/chatext change (customsuffix/customprefix) "your custom text"
 ``
 
 ``
@@ -38,13 +38,13 @@ For normal players (config must be correctly adjusted):
 For Opped players:
 
 ``
-/changeext reset (all/suffix/prefix/nickname) (playername)
+/chatext reset (all/suffix/prefix/nickname) (playername)
 ``
 
 For normal players (config must be correctly adjusted):
 
 ``
-/changeext reset (customall/customsuffix/customprefix)
+/chatext reset (customall/customsuffix/customprefix)
 ``
 
 ``
